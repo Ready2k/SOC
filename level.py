@@ -58,7 +58,9 @@ class Level():
           # checks if the column contains an x. This represents a barrier on the map.
           Plastic((x,y),[self.visible_sprites, self.obstacle_sprites])
 
-    
+        if col == "tg":
+          # checks if the column contains an x. This represents a barrier on the map.
+          TreeGrass((x, y), [self.visible_sprites, self.obstacle_sprites])
   def create_attack(self):
     # this creates the attack function.
     Weapon(self.player,[self.visible_sprites])

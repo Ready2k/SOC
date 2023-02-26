@@ -1,8 +1,11 @@
 # CREATE THE PLAYER AND ALL OF THE ATTRIBUTES. CREATES THE PLAYER MOVEMENT
 
-import pygame 
+import pygame
+
+import tile
 from settings import *
 from menu import *
+from tile import *
 #from level import create_map
 
 #chosen_level = Level()
@@ -163,7 +166,7 @@ class Player(pygame.sprite.Sprite):
         # checks the player isn't attacking and if idle isn't already in its status
         self.status = self.status + '_idle'
         # this adds the string idle after the players status and stores it as one string
-        
+
         # this checks if the player is moving, if it isn't it changes it so it is
 
     if self.attacking:
@@ -211,31 +214,76 @@ class Player(pygame.sprite.Sprite):
     if direction == 'horizontal':
       # uses the variables defined above when checking if there was a collision
       for sprite in self.obstacle_sprites:
-        # for each sprite
-        if sprite.hitbox.colliderect(self.hitbox):
-          if self.direction.x > 0:
-            # player is moving right
-            self.hitbox.right = sprite.hitbox.left
-            # if the player is moving right, the collision must happen on the left
-          if self.direction.x < 0:
-            #player is moving left
-             self.hitbox.left = sprite.hitbox.right
-             # if the player is moving left, the collision must happen on the right
+        # for each sprite]
+        if sprite.collectable == 'false' and sprite.walkbehind == 'false':
+          if sprite.hitbox.colliderect(self.hitbox):
+            if self.direction.x > 0:
+              # player is moving right
+              self.hitbox.right = sprite.hitbox.left
+              # if the player is moving right, the collision must happen on the left
+            if self.direction.x < 0:
+              #player is moving left
+              self.hitbox.left = sprite.hitbox.right
+              # if the player is moving left, the collision must happen on the right
+        if sprite.collectable == 'true' and sprite.walkbehind == 'false':
+          if sprite.hitbox.colliderect(self.hitbox):
+            if self.direction.x > 0:
+              # player is moving right
+              # work out the score
+              if sprite.trash == 1:
+                self.exp += 1
+              if sprite.trash == 2:
+                self.exp += 2
+              elif sprite.trash == 3:
+                self.exp += 10
+              sprite.kill()
+
+            if self.direction.x < 0:
+              # work out the score
+              if sprite.trash == 1:
+                self.exp += 1
+              if sprite.trash == 2:
+                self.exp += 2
+              elif sprite.trash == 3:
+                self.exp += 10
+              sprite.kill()
 
     if direction == 'vertical':
-      # checks of a vertical collision
+      # uses the variables defined above when checking if there was a collision
       for sprite in self.obstacle_sprites:
-        if sprite.hitbox.colliderect(self.hitbox):
-          if self.direction.y > 0:
-            # player is moving up
-            self.hitbox.bottom = sprite.hitbox.top
-            # if the player is moving right, the collision must happen on the left
-          if self.direction.y < 0:
-            #player is moving down
-             self.hitbox.top = sprite.hitbox.bottom
-  
-    
-    # self.rect.center += self.direction * self.speed
+        # for each sprite]
+        if sprite.collectable == 'false' and sprite.walkbehind == 'false':
+          if sprite.hitbox.colliderect(self.hitbox):
+            if self.direction.y > 0:
+              # player is moving up
+              self.hitbox.bottom = sprite.hitbox.top
+              # if the player is moving up, the collision must happen on the bottom
+            if self.direction.y < 0:
+              #player is moving down
+              self.hitbox.top = sprite.hitbox.bottom
+              # if the player is moving down, the collision must happen on the top
+        if sprite.collectable == 'true' and sprite.walkbehind == 'false':
+          if sprite.hitbox.colliderect(self.hitbox):
+            if self.direction.y > 0:
+              # work out the score
+              if sprite.trash == 1:
+                self.exp += 1
+              if sprite.trash == 2:
+                self.exp += 2
+              elif sprite.trash == 3:
+                self.exp += 10
+              sprite.kill()
+
+            if self.direction.y < 0:
+              # work out the score
+              if sprite.trash == 1:
+                self.exp += 1
+              if sprite.trash == 2:
+                self.exp += 2
+              elif sprite.trash == 3:
+                self.exp += 10
+              sprite.kill()
+
 
   def cooldowns(self):
     current_time = pygame.time.get_ticks()

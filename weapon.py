@@ -1,15 +1,20 @@
 import pygame
 from player import *
-from level import *
+from tile import *
+#from level import *
 
 class Weapon(pygame.sprite.Sprite):
   # creates the class for the sprite
-  def __init__(self,player,groups):
-    super().__init__(groups)
+  def __init__(self,player,weapon):
+    super().__init__(weapon)
     direction = player.status.split('_')[0]
     # the split method seperates items from an array so they can be used individually. It takes up to two arguements with one being necessary. It is what you split the data by. it is splitting the array that tells us what the player is doing in terms of movement.
     print(direction)
-    
+    # set some rules for the sprites
+    self.collectable = "true"
+    # can be collected and picked up
+    self.walkbehind = "false"
+    # player can walk behind
 
     #graphic
     #full_path = f'images/sword.png'
@@ -37,6 +42,5 @@ class Weapon(pygame.sprite.Sprite):
     else:
       self.rect = self.image.get_rect(center = player.rect.center)
       # if the player is not moving, then the rectangle is still placed depeding on the direction they are facing.
-
 
 # 2.51.29

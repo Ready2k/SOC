@@ -51,23 +51,6 @@ class Game:
       # moves the game by using frame rates. This allows the player and other characters to move. The update function ensures that the game is kept up to date and tracks players movement.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if __name__ == "_main_":
   game = Game()
   game.run()
